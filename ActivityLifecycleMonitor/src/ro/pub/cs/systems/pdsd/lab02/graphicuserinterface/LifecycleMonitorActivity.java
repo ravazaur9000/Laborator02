@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 
@@ -64,7 +65,10 @@ public class LifecycleMonitorActivity extends Activity {
 		}
 		
 	}
-
+	
+	
+    
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +78,95 @@ public class LifecycleMonitorActivity extends Activity {
         okButton.setOnClickListener(buttonClickListener);
         Button cancelButton = (Button)findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(buttonClickListener);
+        if(savedInstanceState == null)
+         Log.d(Constants.TAG, "activitatea nu a fost rulata anterior");
         Log.d(Constants.TAG, "onCreate() method was invoked");
+        //
+        
+        
+        
+        if(savedInstanceState != null){
+        //CheckBox check= (CheckBox)findViewById(R.id.remember_me_checkbox);
+	        EditText passwordEditText = (EditText)findViewById(R.id.password_edit_text);
+	  	  	EditText usernameEditText = (EditText)findViewById(R.id.username_edit_text);
+	        if (savedInstanceState.getString(Constants.USERNAME_EDIT_TEXT) != null) {
+	            usernameEditText.setText(savedInstanceState.getString(Constants.USERNAME_EDIT_TEXT));
+	        }
+	        if (savedInstanceState.getString(Constants.PASSWORD_EDIT_TEXT) != null) {
+	            passwordEditText.setText(savedInstanceState.getString(Constants.PASSWORD_EDIT_TEXT));
+	        }
+        }
     }    
+    
+    @Override
+    protected void onRestart() {
+      super.onRestart();
+      Log.d(Constants.TAG, "onRestart() method was invoked");
+    }
+    
+    @Override
+    protected void onStart() {
+      super.onStart();
+      Log.d(Constants.TAG, "onStart() method was invoked");
+    }
+   
+    @Override
+    protected void onResume() {
+      super.onResume();
+      Log.d(Constants.TAG, "onResume() method was invoked");
+    }
+   
+    @Override
+    protected void onPause() {
+      super.onPause();
+      Log.d(Constants.TAG, "onPause() method was invoked");
+    }
+   
+    @Override
+    protected void onStop() {
+      super.onStop();
+      Log.d(Constants.TAG, "onStop() method was invoked");
+
+    }
+   
+    @Override
+    protected void onDestroy() {
+      super.onDestroy();
+      Log.d(Constants.TAG, "onDestroy() method was invoked");
+    }
+   
+    
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+      super.onSaveInstanceState(savedInstanceState);
+      CheckBox check= (CheckBox)findViewById(R.id.remember_me_checkbox);
+      
+	  EditText passwordEditText = (EditText)findViewById(R.id.password_edit_text);
+	  EditText usernameEditText = (EditText)findViewById(R.id.username_edit_text);
+      if(check.isChecked() == true){
+    	  
+    	  savedInstanceState.putString(Constants.USERNAME_EDIT_TEXT, usernameEditText.getText().toString());
+    	  
+    	  savedInstanceState.putString(Constants.PASSWORD_EDIT_TEXT, passwordEditText.getText().toString());
+      }
+      
+    }
+    
+    
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+      //super.onRestoreInstanceState(savedInstanceState);
+      /*CheckBox check= (CheckBox)findViewById(R.id.remember_me_checkbox);
+      EditText passwordEditText = (EditText)findViewById(R.id.password_edit_text);
+	  EditText usernameEditText = (EditText)findViewById(R.id.username_edit_text);
+      if (savedInstanceState.getString(Constants.USERNAME_EDIT_TEXT) != null) {
+          usernameEditText.setText(savedInstanceState.getString(Constants.USERNAME_EDIT_TEXT));
+      }
+      if (savedInstanceState.getString(Constants.PASSWORD_EDIT_TEXT) != null) {
+          passwordEditText.setText(savedInstanceState.getString(Constants.PASSWORD_EDIT_TEXT));
+      }*/
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
